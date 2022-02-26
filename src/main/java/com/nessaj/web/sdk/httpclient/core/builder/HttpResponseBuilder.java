@@ -29,7 +29,7 @@ public class HttpResponseBuilder {
         return this;
     }
 
-    public HttpResponse getHttpResponse() {
+    public HttpResponse build() {
         if (httpResponse == null)
             this.httpResponse = new HttpResponse();
         return httpResponse;

@@ -43,7 +43,7 @@ public class HttpRequestBuilder {
         return this;
     }
 
-    public HttpRequest getHttpRequest() {
+    public HttpRequest build() {
         if (httpRequest == null)
             this.httpRequest = new HttpRequest();
         return httpRequest;

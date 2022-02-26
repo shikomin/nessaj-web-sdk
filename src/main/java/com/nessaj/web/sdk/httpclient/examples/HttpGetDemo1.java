@@ -27,7 +27,7 @@ public class HttpGetDemo1 {
                 .setHeader(null)
                 .setParams(null)
                 .setRequestConfig(requestConfig)
-                .getHttpRequest();
+                .build();
         HttpResponse response = (HttpResponse) sender.send(request);
         System.out.println(response.toString());
     }

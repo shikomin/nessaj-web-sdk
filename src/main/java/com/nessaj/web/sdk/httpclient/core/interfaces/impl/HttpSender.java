@@ -75,7 +75,7 @@ public class HttpSender implements Sender {
             HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
             httpResponse = httpResponseBuilder.setStatusLine(response.getStatusLine().toString())
                     .setContentLength(responseEntity.getContentLength())
-                    .setContent(EntityUtils.toString(responseEntity)).getHttpResponse();
+                    .setContent(EntityUtils.toString(responseEntity)).build();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -12,7 +12,7 @@ import org.apache.http.client.config.RequestConfig;
  * @author keming
  * @Date 2022/02/26 20:09
  */
-public class HttpGetDemo1 {
+public class HttpGetNoParamsDemo {
 
     public static void main(String[] args) {
         Sender sender = new HttpSender();

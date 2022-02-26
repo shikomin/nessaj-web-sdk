@@ -3,9 +3,9 @@ package com.nessaj.web.sdk.redis;
 
 /**
  * @author keming
- * @Date 2022/02/25 19:54
+ * @Date 2022/01/27 19:54
  */
-public class RedisDemo {
+public class RedisConnector {
     public static void main(String[] args) {
     }
 }

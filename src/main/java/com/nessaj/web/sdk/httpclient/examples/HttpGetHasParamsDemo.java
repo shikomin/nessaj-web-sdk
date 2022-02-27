@@ -8,28 +8,32 @@ import com.nessaj.web.sdk.httpclient.core.interfaces.Sender;
 import com.nessaj.web.sdk.httpclient.core.interfaces.impl.HttpSender;
 import org.apache.http.client.config.RequestConfig;
 
+import java.util.LinkedHashMap;
+
 /**
  * @author keming
- * @Date 2022/02/26 20:09
+ * @Date 2022/02/27 12:45
  */
-public class HttpGetNoParamsDemo {
+public class HttpGetHasParamsDemo {
 
     public static void main(String[] args) {
         Sender sender = new HttpSender();
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+        params.put("mid", "1");
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true).build();
-        HttpRequest httpRequest = requestBuilder.setUrl("http://localhost:9097/healthcheck")
-                .setMethod(HttpMethod.GET)
+        HttpRequest httpRequest = httpRequestBuilder.setMethod(HttpMethod.GET)
+                .setUrl("http://localhost:9097/module")
                 .setHeader(null)
-                .setParams(null)
+                .setParams(params)
                 .setRequestConfig(requestConfig)
                 .build();
-        HttpResponse response = (HttpResponse) sender.send(httpRequest);
-        System.out.println(response.toString());
+        HttpResponse httpResponse = (HttpResponse) sender.send(httpRequest);
+        System.out.println(httpResponse.toString());
     }
 
 }

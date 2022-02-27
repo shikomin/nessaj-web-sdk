@@ -15,7 +15,7 @@ public class URLUtil {
         for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
             params.append(entry.getKey() + "=" + entry.getValue() + "&");
         }
-        return url + params.toString().substring(0, params.length() - 1);
+        return url + "?" + params.toString().substring(0, params.length() - 1);
     }
 
     public static void main(String[] args) {

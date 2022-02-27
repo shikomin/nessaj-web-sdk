@@ -33,7 +33,7 @@ public class HttpRequestBuilder {
         return this;
     }
 
-    public HttpRequestBuilder setParams(LinkedHashMap<String, String> params) {
+    public HttpRequestBuilder setParams(LinkedHashMap<Object, Object> params) {
         this.httpRequest.setParams(params);
         return this;
     }

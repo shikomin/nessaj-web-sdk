@@ -18,16 +18,16 @@ public abstract class Request {
 
     private LinkedHashMap<String, String> header;
 
-    private LinkedHashMap<String, String> params;
+    private LinkedHashMap<Object, Object> params;
 
     private RequestConfig requestConfig;
 
     public boolean hasHeader() {
-        return this.header != null;
+        return (this.header != null) && (!this.header.isEmpty());
     }
 
     public boolean hasParams() {
-        return this.params != null;
+        return (this.params != null) && (!this.params.isEmpty());
     }
 
     public HttpMethod getMethod() {
@@ -46,11 +46,11 @@ public abstract class Request {
         this.header = header;
     }
 
-    public LinkedHashMap<String, String> getParams() {
+    public LinkedHashMap<Object, Object> getParams() {
         return params;
     }
 
-    public void setParams(LinkedHashMap<String, String> params) {
+    public void setParams(LinkedHashMap<Object, Object> params) {
         this.params = params;
     }
 

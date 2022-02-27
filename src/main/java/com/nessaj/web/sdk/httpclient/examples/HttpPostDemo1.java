@@ -12,23 +12,34 @@ import java.util.LinkedHashMap;
 
 /**
  * @author keming
- * @Date 2022/02/27 12:45
+ * @Date 2022/02/27 15:33
  */
-public class HttpGetHasParamsDemo {
+public class HttpPostDemo1 {
 
     public static void main(String[] args) {
         Sender sender = new HttpSender();
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
+
+        LinkedHashMap<String, String> header = new LinkedHashMap<>();
         LinkedHashMap<Object, Object> params = new LinkedHashMap<>();
-        params.put("mid", "1");
+
+        header.put("Content-Type", "application/json;charset=utf8");
+        header.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
+
+        params.put("mid", "5");
+        params.put("mname", "eng");
+        params.put("minfo", "Anglo-Saxon");
+        params.put("status", "uploaded");
+
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true).build();
-        HttpRequest httpRequest = httpRequestBuilder.setMethod(HttpMethod.GET)
+
+        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
+        HttpRequest httpRequest = httpRequestBuilder.setMethod(HttpMethod.POST)
                 .setUrl("http://localhost:9097/module")
-                .setHeader(null)
+                .setHeader(header)
                 .setParams(params)
                 .setRequestConfig(requestConfig)
                 .build();

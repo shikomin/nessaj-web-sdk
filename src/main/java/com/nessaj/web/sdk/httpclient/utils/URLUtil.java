@@ -10,16 +10,16 @@ import java.util.Map;
  */
 public class URLUtil {
 
-    public static String addParams2URL(String url, HashMap<String, String> paramsMap) {
+    public static String addParams2URL(String url, HashMap<Object, Object> paramsMap) {
         StringBuffer params = new StringBuffer();
-        for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
+        for (Map.Entry<Object, Object> entry : paramsMap.entrySet()) {
             params.append(entry.getKey() + "=" + entry.getValue() + "&");
         }
         return url + "?" + params.toString().substring(0, params.length() - 1);
     }
 
     public static void main(String[] args) {
-        HashMap<String, String> map = new LinkedHashMap<>();
+        HashMap<Object, Object> map = new LinkedHashMap<>();
         map.put("name", "Tadokoro");
         map.put("age", "24");
         map.put("identity", "student");

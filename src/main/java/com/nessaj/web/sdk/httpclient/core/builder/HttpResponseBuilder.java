@@ -14,6 +14,10 @@ public class HttpResponseBuilder {
         this.httpResponse = new HttpResponse();
     }
 
+    public static HttpResponseBuilder create() {
+        return new HttpResponseBuilder();
+    }
+
     public HttpResponseBuilder setStatusLine(String statusLine) {
         httpResponse.setStatusLine(statusLine);
         return this;

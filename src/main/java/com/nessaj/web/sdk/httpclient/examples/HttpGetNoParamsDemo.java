@@ -3,12 +3,12 @@ package com.nessaj.web.sdk.httpclient.examples;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import com.nessaj.web.sdk.httpclient.core.HttpResponse;
-import com.nessaj.web.sdk.httpclient.core.builder.HttpRequestBuilder;
-import com.nessaj.web.sdk.httpclient.core.interfaces.Sender;
-import com.nessaj.web.sdk.httpclient.core.interfaces.impl.HttpSender;
+import com.nessaj.web.sdk.httpclient.core.Sender;
+import com.nessaj.web.sdk.httpclient.core.impl.HttpSender;
 import org.apache.http.client.config.RequestConfig;
 
 /**
+ * http get 方法示例
  * @author keming
  * @Date 2022/02/26 20:09
  */
@@ -16,13 +16,13 @@ public class HttpGetNoParamsDemo {
 
     public static void main(String[] args) {
         Sender sender = new HttpSender();
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true).build();
-        HttpRequest httpRequest = requestBuilder.setUrl("http://localhost:9097/healthcheck")
+        HttpRequest httpRequest = HttpRequest.custom()
+                .setUrl("http://localhost:9097/healthcheck")
                 .setMethod(HttpMethod.GET)
                 .setHeader(null)
                 .setParams(null)

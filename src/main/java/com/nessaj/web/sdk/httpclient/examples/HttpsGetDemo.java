@@ -1,39 +1,35 @@
 package com.nessaj.web.sdk.httpclient.examples;
 
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
-import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import com.nessaj.web.sdk.httpclient.core.HttpResponse;
-import com.nessaj.web.sdk.httpclient.core.builder.HttpRequestBuilder;
+import com.nessaj.web.sdk.httpclient.core.HttpsRequest;
 import com.nessaj.web.sdk.httpclient.core.Sender;
-import com.nessaj.web.sdk.httpclient.core.impl.HttpSender;
+import com.nessaj.web.sdk.httpclient.core.impl.HttpsSender;
 import org.apache.http.client.config.RequestConfig;
 
-import java.util.LinkedHashMap;
-
 /**
- * http get(带参) 方法示例
  * @author keming
- * @Date 2022/02/27 12:45
+ * @Date 2022/03/01 21:39
  */
-public class HttpGetHasParamsDemo {
+public class HttpsGetDemo {
 
     public static void main(String[] args) {
-        Sender sender = new HttpSender();
-        LinkedHashMap<Object, Object> params = new LinkedHashMap<>();
-        params.put("mid", "1");
+        Sender sender = new HttpsSender();
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true).build();
-        HttpRequest httpRequest = HttpRequest.custom()
+        HttpsRequest request = HttpsRequest.custom()
+                .setUrl("https://localhost:9097/healthcheck")
                 .setMethod(HttpMethod.GET)
-                .setUrl("http://localhost:9097/module")
                 .setHeader(null)
-                .setParams(params)
+                .setParams(null)
                 .setRequestConfig(requestConfig)
+                .setKeystorePath("E:/Nessaj/ssl/nessaj-keystore.jks").setKeystoreType("jks").setKeystorePassword("Nessaj@123")
+                .setTruststorePath("E:/Nessaj/ssl/nessaj-truststore.jks").setTruststoreType("jks").setTruststorePassword("Nessaj@123")
                 .build();
-        HttpResponse httpResponse = (HttpResponse) sender.send(httpRequest);
+        HttpResponse httpResponse = (HttpResponse) sender.send(request);
         System.out.println(httpResponse.toString());
     }
 

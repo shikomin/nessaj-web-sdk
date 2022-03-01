@@ -3,14 +3,14 @@ package com.nessaj.web.sdk.httpclient.examples;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import com.nessaj.web.sdk.httpclient.core.HttpResponse;
-import com.nessaj.web.sdk.httpclient.core.builder.HttpRequestBuilder;
-import com.nessaj.web.sdk.httpclient.core.interfaces.Sender;
-import com.nessaj.web.sdk.httpclient.core.interfaces.impl.HttpSender;
+import com.nessaj.web.sdk.httpclient.core.Sender;
+import com.nessaj.web.sdk.httpclient.core.impl.HttpSender;
 import org.apache.http.client.config.RequestConfig;
 
 import java.util.LinkedHashMap;
 
 /**
+ * http post 方法示例
  * @author keming
  * @Date 2022/02/27 15:33
  */
@@ -36,8 +36,8 @@ public class HttpPostDemo1 {
                 .setSocketTimeout(5000)
                 .setRedirectsEnabled(true).build();
 
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
-        HttpRequest httpRequest = httpRequestBuilder.setMethod(HttpMethod.POST)
+        HttpRequest httpRequest = HttpRequest.custom()
+                .setMethod(HttpMethod.POST)
                 .setUrl("http://localhost:9097/module")
                 .setHeader(header)
                 .setParams(params)

@@ -18,6 +18,10 @@ public class HttpRequestBuilder {
         this.httpRequest = new HttpRequest();
     }
 
+    public static HttpRequestBuilder create() {
+        return new HttpRequestBuilder();
+    }
+
     public HttpRequestBuilder setUrl(String url) {
         this.httpRequest.setUrl(url);
         return this;

@@ -17,8 +17,8 @@ public class HttpResponse extends Response {
 
     @Override
     public String toString() {
-        return "HttpResponse{\n\t\tstatus line: " + this.getStatusLine()
-                + "\n\t\tcontent-length: " + this.getContentLength()
-                + "\n\t\tcontent: " + this.getContent() + "\n}";
+        return "HttpResponse{\n\tstatus line: " + this.getStatusLine()
+                + "\n\tcontent-length: " + this.getContentLength()
+                + "\n\tcontent: " + this.getContent() + "\n}";
     }
 }

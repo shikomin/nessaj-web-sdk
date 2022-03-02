@@ -1,5 +1,7 @@
 package com.nessaj.web.sdk.httpclient.core.impl;
 
+import com.nessaj.web.sdk.httpclient.common.constants.ExceptionMsg;
+import com.nessaj.web.sdk.httpclient.common.constants.TlsVersion;
 import com.nessaj.web.sdk.httpclient.core.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,14 +31,12 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
         try {
             sslContext = SSLContext.getInstance("TLS");
             sslContext.init(initKeyManager(httpsRequest), initTrustManager(httpsRequest), null);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("NoSuchAlgorithmException", e);
-        } catch (KeyManagementException e) {
-            logger.error("KeyManagementException", e);
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
         }
         //设置规则限制
         SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext,
-                new String[]{"TLSv1", "TLSv1.1", "TLSv1.2"},
+                new String[]{TlsVersion.TLS_V1, TlsVersion.TLS_V1_1, TlsVersion.TLS_V1_2},
                 null,
                 new HttpsHostnameVerifier());
         //注册
@@ -62,21 +62,11 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
 
         try {
             keyFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            KeyStore keystore = KeyStore.getInstance("jks");
-            keystore.load(new FileInputStream(new File("E:/Nessaj/ssl/nessaj-keystore.jks")), null);
-            keyFactory.init(keystore, "Nessaj@123".toCharArray());
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("NoSuchAlgorithmException", e);
-        } catch (UnrecoverableKeyException e) {
-            logger.error("UnrecoverableKeyException", e);
-        } catch (FileNotFoundException e) {
-            logger.error("FileNotFoundException", e);
-        } catch (CertificateException e) {
-            logger.error("CertificateException", e);
-        } catch (KeyStoreException e) {
-            logger.error("KeyStoreException", e);
-        } catch (IOException e) {
-            logger.error("IOException", e);
+            KeyStore keystore = KeyStore.getInstance(request.getKeystoreType());
+            keystore.load(new FileInputStream(new File(request.getKeystorePath())), null);
+            keyFactory.init(keystore, request.getKeystorePassword().toCharArray());
+        } catch (NoSuchAlgorithmException | UnrecoverableKeyException | CertificateException | KeyStoreException | IOException e) {
+            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
         }
         return keyFactory.getKeyManagers();
     }
@@ -93,16 +83,8 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
             KeyStore truststore = KeyStore.getInstance(request.getTruststoreType());
             truststore.load(new FileInputStream(new File(request.getTruststorePath())), request.getTruststorePassword().toCharArray());
             trustFactory.init(truststore);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
+            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
         }
         return trustFactory.getTrustManagers();
     }

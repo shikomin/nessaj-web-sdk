@@ -1,6 +1,7 @@
 package com.nessaj.web.sdk.httpclient.core;
 
 import com.alibaba.fastjson.JSON;
+import com.nessaj.web.sdk.httpclient.common.constants.ExceptionMsg;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.utils.URLUtil;
 import org.apache.http.HttpEntity;
@@ -12,6 +13,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,6 +23,8 @@ import java.util.Map;
  * @Date 2022/03/01 16:03
  */
 public class PlainRequestHandler {
+
+    private static Logger logger = Logger.getLogger(PlainRequestHandler.class);
 
     /**
      * 根据method处理请求
@@ -133,7 +137,7 @@ public class PlainRequestHandler {
                 response.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTP_REQUEST, e);
         }
     }
 
@@ -154,7 +158,7 @@ public class PlainRequestHandler {
                     .setContentLength(responseEntity.getContentLength())
                     .setContent(EntityUtils.toString(responseEntity)).build();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTP_REQUEST, e);
         } finally {
             closeResource(httpClient, response);
         }

@@ -1,6 +1,5 @@
 package com.nessaj.web.sdk.redis;
 
-
 import redis.clients.jedis.Jedis;
 
 /**
@@ -13,4 +12,5 @@ public class JedisDemo {
         jedis.auth("redis@123");
         jedis.select(0);
     }
+
 }

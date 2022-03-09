@@ -8,12 +8,22 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 
-import javax.net.ssl.*;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.*;
+
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
@@ -39,12 +49,12 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
                 new String[]{TlsVersion.TLS_V1, TlsVersion.TLS_V1_1, TlsVersion.TLS_V1_2},
                 null,
                 new HttpsHostnameVerifier());
-        //注册
+//        注册
 //        Registry<ConnectionSocketFactory> socketFactoryRegistry = null;
 //        socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
 //                .register("http", PlainConnectionSocketFactory.INSTANCE)
 //                .register("https", sslConnectionSocketFactory).build();
-        //池化管理
+//        池化管理
 //        PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 
         CloseableHttpClient httpClient;

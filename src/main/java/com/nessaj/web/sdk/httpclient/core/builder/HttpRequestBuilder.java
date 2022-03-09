@@ -4,6 +4,7 @@ import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import org.apache.http.client.config.RequestConfig;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 /**
@@ -44,6 +45,11 @@ public class HttpRequestBuilder {
 
     public HttpRequestBuilder setRequestConfig(RequestConfig requestConfig) {
         this.httpRequest.setRequestConfig(requestConfig);
+        return this;
+    }
+
+    public HttpRequestBuilder setMultipartData(File multipartData) {
+        this.httpRequest.setMultipartData(multipartData);
         return this;
     }
 

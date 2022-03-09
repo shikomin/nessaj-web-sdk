@@ -4,6 +4,7 @@ import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.sun.istack.internal.NotNull;
 import org.apache.http.client.config.RequestConfig;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 /**
@@ -21,6 +22,8 @@ public abstract class Request {
     private LinkedHashMap<Object, Object> params;
 
     private RequestConfig requestConfig;
+
+    private File multipartData;
 
     public boolean hasHeader() {
         return (this.header != null) && (!this.header.isEmpty());
@@ -69,4 +72,13 @@ public abstract class Request {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public File getMultipartData() {
+        return multipartData;
+    }
+
+    public void setMultipartData(File multipartData) {
+        this.multipartData = multipartData;
+    }
+
 }

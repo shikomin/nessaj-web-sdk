@@ -4,6 +4,7 @@ import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.core.HttpsRequest;
 import org.apache.http.client.config.RequestConfig;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 /**
@@ -80,6 +81,11 @@ public class HttpsRequestBuilder {
 
     public HttpsRequestBuilder setTruststorePassword(String truststorePassword) {
         this.httpsRequest.setTruststorePassword(truststorePassword);
+        return this;
+    }
+
+    public HttpsRequestBuilder setMultipartData(File multipartData) {
+        this.httpsRequest.setMultipartData(multipartData);
         return this;
     }
 

@@ -11,10 +11,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -53,7 +57,7 @@ public class PlainRequestHandler {
     }
 
     /**
-     * http get方法
+     * get方法 设置请求头、配置参数
      *
      * @param httpClient
      * @param request
@@ -74,6 +78,8 @@ public class PlainRequestHandler {
     }
 
     /**
+     * post方法，请求头、请求体（普通数据/二进制文件数据）
+     *
      * @param httpClient
      * @param request
      * @return
@@ -84,9 +90,8 @@ public class PlainRequestHandler {
         if (request.hasHeader()) {
             httpPost = (HttpPost) setHeader(httpPost, request.getHeader());
         }
-        String jsonParams = JSON.toJSONString(request.getParams());
-        StringEntity stringEntity = new StringEntity(jsonParams, ContentType.create("application/json", "utf-8"));
-        httpPost.setEntity(stringEntity);
+        HttpEntity httpEntity = geneHttpEntity(request);
+        httpPost.setEntity(httpEntity);
         httpPost.setConfig(request.getRequestConfig());
         HttpResponse httpResponse = responseHandler(httpClient, httpPost);
         return httpResponse;
@@ -125,6 +130,8 @@ public class PlainRequestHandler {
     }
 
     /**
+     * 关闭资源
+     *
      * @param httpClient
      * @param response
      */
@@ -139,6 +146,21 @@ public class PlainRequestHandler {
         } catch (IOException e) {
             logger.error(ExceptionMsg.EXCEPTION_SEND_HTTP_REQUEST, e);
         }
+    }
+
+    /**
+     * 根据是否上传二进制文件生成HttpEntity
+     *
+     * @param request
+     * @return
+     */
+    private HttpEntity geneHttpEntity(Request request) {
+        if (request.getMultipartData() != null) {
+            FileBody bin = new FileBody(request.getMultipartData());
+            return MultipartEntityBuilder.create().addPart("file", bin).build();
+        }
+        String jsonParams = JSON.toJSONString(request.getParams());
+        return new StringEntity(jsonParams, ContentType.create("application/json", "utf-8"));
     }
 
     /**

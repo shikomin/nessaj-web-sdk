@@ -1,5 +1,6 @@
 package redis;
 
+import com.nessaj.web.sdk.redis.factory.JedisConnectionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class JedisTest {
 
     @BeforeEach
     void jedisConnector() {
-        jedis = new Jedis("124.223.11.152", 6379);
+        jedis = JedisConnectionFactory.getJedis();
         jedis.auth("redis@123");
         jedis.select(0);
     }
@@ -32,9 +33,9 @@ public class JedisTest {
 
     @Test
     void testMap() {
-        jedis.hset("user:1", "name", "topson");
-        jedis.hset("user:1", "age", "25");
-        Map<String, String> user1 = jedis.hgetAll("user:1");
+        jedis.hset("user:2", "name", "notail");
+        jedis.hset("user:2", "age", "27");
+        Map<String, String> user1 = jedis.hgetAll("user:2");
         for (Map.Entry entry : user1.entrySet()) {
             System.out.println("field:" + entry.getKey() + ", value:" + entry.getValue());
         }

@@ -1,7 +1,7 @@
 package com.nessaj.web.sdk.httpclient.core;
 
 import com.alibaba.fastjson.JSON;
-import com.nessaj.web.sdk.httpclient.common.constants.ExceptionMsg;
+import com.nessaj.web.sdk.httpclient.common.constants.ErrorMessage;
 import com.nessaj.web.sdk.httpclient.common.constants.StringConstants;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.common.exception.NullFileNameException;
@@ -95,7 +95,7 @@ public class PlainRequestHandler {
         try {
             httpEntity = geneHttpEntity(request);
         } catch (NullFileNameException e) {
-            logger.error(ExceptionMsg.GET_FILENAME_ERROR, e);
+            logger.error(ErrorMessage.GET_FILENAME_ERROR, e);
             return HttpResponse.custom().setContent(StringConstants.FAILED_TO_SEND_POST).build();
         }
 
@@ -158,7 +158,7 @@ public class PlainRequestHandler {
             if (response != null)
                 response.close();
         } catch (IOException e) {
-            logger.error(ExceptionMsg.SEND_HTTP_REQUEST_EXCEPTION, e);
+            logger.error(ErrorMessage.SEND_HTTP_REQUEST_EXCEPTION, e);
         }
     }
 
@@ -209,7 +209,7 @@ public class PlainRequestHandler {
                     .setContentLength(responseEntity.getContentLength())
                     .setContent(EntityUtils.toString(responseEntity)).build();
         } catch (IOException e) {
-            logger.error(ExceptionMsg.SEND_HTTP_REQUEST_EXCEPTION, e);
+            logger.error(ErrorMessage.SEND_HTTP_REQUEST_EXCEPTION, e);
         } finally {
             closeResource(httpClient, response);
         }

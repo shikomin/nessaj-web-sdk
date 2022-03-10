@@ -5,6 +5,7 @@ import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import org.apache.http.client.config.RequestConfig;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 
 /**
@@ -48,7 +49,7 @@ public class HttpRequestBuilder {
         return this;
     }
 
-    public HttpRequestBuilder setMultipartData(File multipartData) {
+    public HttpRequestBuilder setMultipartData(InputStream multipartData) {
         this.httpRequest.setMultipartData(multipartData);
         return this;
     }

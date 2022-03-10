@@ -3,7 +3,6 @@ package com.nessaj.web.sdk.httpclient.examples;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
 import com.nessaj.web.sdk.httpclient.core.HttpRequest;
 import com.nessaj.web.sdk.httpclient.core.HttpResponse;
-import com.nessaj.web.sdk.httpclient.core.builder.HttpRequestBuilder;
 import com.nessaj.web.sdk.httpclient.core.Sender;
 import com.nessaj.web.sdk.httpclient.core.impl.HttpSender;
 import org.apache.http.client.config.RequestConfig;

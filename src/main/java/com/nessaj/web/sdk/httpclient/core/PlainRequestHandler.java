@@ -2,7 +2,9 @@ package com.nessaj.web.sdk.httpclient.core;
 
 import com.alibaba.fastjson.JSON;
 import com.nessaj.web.sdk.httpclient.common.constants.ExceptionMsg;
+import com.nessaj.web.sdk.httpclient.common.constants.StringConstants;
 import com.nessaj.web.sdk.httpclient.common.enums.HttpMethod;
+import com.nessaj.web.sdk.httpclient.common.exception.NullFileNameException;
 import com.nessaj.web.sdk.httpclient.utils.URLUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -12,14 +14,13 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -90,10 +91,25 @@ public class PlainRequestHandler {
         if (request.hasHeader()) {
             httpPost = (HttpPost) setHeader(httpPost, request.getHeader());
         }
-        HttpEntity httpEntity = geneHttpEntity(request);
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = geneHttpEntity(request);
+        } catch (NullFileNameException e) {
+            logger.error(ExceptionMsg.GET_FILENAME_ERROR, e);
+            return HttpResponse.custom().setContent(StringConstants.FAILED_TO_SEND_POST).build();
+        }
+
         httpPost.setEntity(httpEntity);
         httpPost.setConfig(request.getRequestConfig());
         HttpResponse httpResponse = responseHandler(httpClient, httpPost);
+        try {
+            InputStream inStream = request.getMultipartData();
+            if (inStream != null)
+                inStream.close();
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
         return httpResponse;
     }
 
@@ -137,14 +153,12 @@ public class PlainRequestHandler {
      */
     private void closeResource(CloseableHttpClient httpClient, CloseableHttpResponse response) {
         try {
-            if (httpClient != null) {
+            if (httpClient != null)
                 httpClient.close();
-            }
-            if (response != null) {
+            if (response != null)
                 response.close();
-            }
         } catch (IOException e) {
-            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTP_REQUEST, e);
+            logger.error(ExceptionMsg.SEND_HTTP_REQUEST_EXCEPTION, e);
         }
     }
 
@@ -154,13 +168,28 @@ public class PlainRequestHandler {
      * @param request
      * @return
      */
-    private HttpEntity geneHttpEntity(Request request) {
+    private HttpEntity geneHttpEntity(Request request) throws NullFileNameException, NullPointerException {
         if (request.getMultipartData() != null) {
-            FileBody bin = new FileBody(request.getMultipartData());
-            return MultipartEntityBuilder.create().addPart("file", bin).build();
+            InputStream inputStream = request.getMultipartData();
+            String fileName = getFileNameFromParams(request.getParams());
+            return MultipartEntityBuilder.create().addBinaryBody(StringConstants.FILE_PARAM, inputStream, ContentType.MULTIPART_FORM_DATA, fileName).build();
         }
         String jsonParams = JSON.toJSONString(request.getParams());
-        return new StringEntity(jsonParams, ContentType.create("application/json", "utf-8"));
+        return new StringEntity(jsonParams, ContentType.create(StringConstants.APPLICATION_JSON, StringConstants.UTF8));
+    }
+
+    /**
+     * 从参数中获取文件名
+     *
+     * @param params
+     * @return
+     * @throws NullFileNameException
+     */
+    private String getFileNameFromParams(HashMap<Object, Object> params) throws NullFileNameException, NullPointerException {
+        String fileName = (String) params.get(StringConstants.FILENAME_KEY);
+        if (fileName == null || fileName.equals(StringConstants.EMPTY_STRING) || fileName.equals(StringConstants.SPACE_STRING))
+            throw new NullFileNameException();
+        return fileName;
     }
 
     /**
@@ -180,7 +209,7 @@ public class PlainRequestHandler {
                     .setContentLength(responseEntity.getContentLength())
                     .setContent(EntityUtils.toString(responseEntity)).build();
         } catch (IOException e) {
-            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTP_REQUEST, e);
+            logger.error(ExceptionMsg.SEND_HTTP_REQUEST_EXCEPTION, e);
         } finally {
             closeResource(httpClient, response);
         }

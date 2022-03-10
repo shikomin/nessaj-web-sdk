@@ -42,7 +42,7 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
             sslContext = SSLContext.getInstance("TLS");
             sslContext.init(initKeyManager(httpsRequest), initTrustManager(httpsRequest), null);
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
+            logger.error(ExceptionMsg.SEND_HTTPS_REQUEST_EXCEPTION, e);
         }
         //设置规则限制
         SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext,
@@ -76,7 +76,7 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
             keystore.load(new FileInputStream(new File(request.getKeystorePath())), null);
             keyFactory.init(keystore, request.getKeystorePassword().toCharArray());
         } catch (NoSuchAlgorithmException | UnrecoverableKeyException | CertificateException | KeyStoreException | IOException e) {
-            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
+            logger.error(ExceptionMsg.SEND_HTTPS_REQUEST_EXCEPTION, e);
         }
         return keyFactory.getKeyManagers();
     }
@@ -94,7 +94,7 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
             truststore.load(new FileInputStream(new File(request.getTruststorePath())), request.getTruststorePassword().toCharArray());
             trustFactory.init(truststore);
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
-            logger.error(ExceptionMsg.EXCEPTION_SEND_HTTPS_REQUEST, e);
+            logger.error(ExceptionMsg.SEND_HTTPS_REQUEST_EXCEPTION, e);
         }
         return trustFactory.getTrustManagers();
     }

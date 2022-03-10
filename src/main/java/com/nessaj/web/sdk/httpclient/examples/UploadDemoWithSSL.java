@@ -8,7 +8,9 @@ import com.nessaj.web.sdk.httpclient.core.Sender;
 import com.nessaj.web.sdk.httpclient.core.impl.HttpsSender;
 import org.apache.http.client.config.RequestConfig;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.LinkedHashMap;
 
 /**
  * @author keming
@@ -16,14 +18,16 @@ import java.io.File;
  */
 public class UploadDemoWithSSL {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Sender sender = new HttpsSender();
+        LinkedHashMap<Object, Object> params = new LinkedHashMap<>();
+        params.put("fileName", "rubick2.jpg");
         HttpsRequest request = HttpsRequest.custom()
                 .setUrl("https://localhost:9095/module")
                 .setMethod(HttpMethod.POST)
                 .setHeader(null)
-                .setParams(null)
-                .setMultipartData(new File("E:/etc/nessaj-web-local/orig/rbk.jpg"))
+                .setParams(params)
+                .setMultipartData(new FileInputStream("E:/etc/nessaj-web-local/orig/rbk.jpg"))
                 .setRequestConfig(RequestConfig.custom()
                         .setConnectTimeout(5000)
                         .setConnectionRequestTimeout(5000)

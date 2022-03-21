@@ -8,10 +8,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
-
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
@@ -91,7 +90,7 @@ public class HttpsSender extends PlainRequestHandler implements Sender {
         try {
             trustFactory = TrustManagerFactory.getInstance("SunX509");
             KeyStore truststore = KeyStore.getInstance(request.getTruststoreType());
-            truststore.load(new FileInputStream(new File(request.getTruststorePath())), request.getTruststorePassword().toCharArray());
+            truststore.load(new FileInputStream((request.getTruststorePath())), request.getTruststorePassword().toCharArray());
             trustFactory.init(truststore);
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             logger.error(ErrorMessage.SEND_HTTPS_REQUEST_EXCEPTION, e);

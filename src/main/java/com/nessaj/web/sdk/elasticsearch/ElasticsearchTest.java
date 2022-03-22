@@ -1,14 +1,10 @@
 package com.nessaj.web.sdk.elasticsearch;
 
-import org.apache.http.Header;
-import org.apache.http.HttpHost;
-import org.apache.http.message.BasicHeader;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.support.replication.ReplicationResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 
@@ -24,11 +20,13 @@ import java.util.Map;
 public class ElasticsearchTest {
 
     public static void main(String[] args) {
-        RestHighLevelClient client = JavaRestHighLevelClient.getClient();
+
+        RestHighLevelClient client = RestHighLevelClientBuilder.getInstance().build();
+
         Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("user", "kimchy");
+        jsonMap.put("user2", "kimchy2");
         jsonMap.put("postDate", new Date());
-        jsonMap.put("message", "trying out Elasticsearch");
+        jsonMap.put("message", "trying out Elasticsearch2");
 
         IndexRequest request = new IndexRequest("posts")
                 .id("1").source(jsonMap);

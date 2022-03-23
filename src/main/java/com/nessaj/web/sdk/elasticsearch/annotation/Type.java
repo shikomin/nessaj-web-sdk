@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface Type {
 
-    String propertyType() default "text";
+    ElasticType type() default ElasticType.TEXT;
 
 }

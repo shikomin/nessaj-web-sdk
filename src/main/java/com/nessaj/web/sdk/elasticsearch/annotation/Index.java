@@ -1,5 +1,7 @@
 package com.nessaj.web.sdk.elasticsearch.annotation;
 
+import com.nessaj.web.sdk.elasticsearch.interfaces.DefaultMapping;
+import com.nessaj.web.sdk.elasticsearch.interfaces.DefaultSetting;
 import com.nessaj.web.sdk.elasticsearch.interfaces.IndexMapping;
 import com.nessaj.web.sdk.elasticsearch.interfaces.IndexSetting;
 
@@ -18,8 +20,8 @@ public @interface Index {
 
     String name() default "default_index";
 
-    Class<? extends IndexMapping> mappingGenerator();
+    Class<? extends IndexMapping> mappingGenerator() default DefaultMapping.class;
 
-    Class<? extends IndexSetting> settingGenerator();
+    Class<? extends IndexSetting> settingGenerator() default DefaultSetting.class;
 
 }

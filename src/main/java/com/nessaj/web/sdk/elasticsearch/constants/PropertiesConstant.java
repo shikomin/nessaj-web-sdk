@@ -1,4 +1,4 @@
-package com.nessaj.web.sdk.elasticsearch;
+package com.nessaj.web.sdk.elasticsearch.constants;
 
 /**
  * @author keming
@@ -15,5 +15,9 @@ public class PropertiesConstant {
     public static final String USERNAME = "USERNAME";
 
     public static final String PASSWORD = "PASSWORD";
+
+    public static final String DOUBLE_QUOTATION_MARK = "\"";
+
+    public static final String LINE_BREAK = "\n";
 
 }

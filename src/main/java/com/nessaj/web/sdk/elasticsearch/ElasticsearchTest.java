@@ -1,5 +1,6 @@
 package com.nessaj.web.sdk.elasticsearch;
 
+import com.nessaj.web.sdk.elasticsearch.factory.RestHighLevelClientFactory;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -21,14 +22,15 @@ public class ElasticsearchTest {
 
     public static void main(String[] args) {
 
-        RestHighLevelClient client = RestHighLevelClientBuilder.getInstance().build();
+        RestHighLevelClient client = RestHighLevelClientFactory.getInstance().build();
 
         Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("user2", "kimchy2");
+        jsonMap.put("name", "griff");
+        jsonMap.put("age", 23);
         jsonMap.put("postDate", new Date());
-        jsonMap.put("message", "trying out Elasticsearch2");
+        jsonMap.put("message", "trying out Elasticsearch");
 
-        IndexRequest request = new IndexRequest("posts")
+        IndexRequest request = new IndexRequest("student-01")
                 .id("1").source(jsonMap);
         request.routing("routing");
         request.timeout(TimeValue.timeValueSeconds(5));

@@ -1,4 +1,4 @@
-package com.nessaj.web.sdk.elasticsearch;
+package com.nessaj.web.sdk.elasticsearch.factory;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -9,15 +9,26 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 
-
 /**
  * @author keming
- * @Date 2022/03/21 22:09
+ * @Date 2022/03/23 12:56
  */
-public class RestHighLevelClientBuilder {
+public class RestHighLevelClientFactory {
 
-    public static RestHighLevelClientBuilder getInstance() {
-        return new RestHighLevelClientBuilder();
+    private static RestHighLevelClientFactory esClientFactory = null;
+
+    private RestHighLevelClientFactory() {
+    }
+
+    public static RestHighLevelClientFactory getInstance() {
+        if (esClientFactory == null) {
+            synchronized (RestHighLevelClientFactory.class) {
+                if (esClientFactory == null) {
+                    esClientFactory = new RestHighLevelClientFactory();
+                }
+            }
+        }
+        return esClientFactory;
     }
 
     public RestHighLevelClient build() {
@@ -27,7 +38,9 @@ public class RestHighLevelClientBuilder {
         RestHighLevelClient client = new RestHighLevelClient(
                 getRestClientBuilder().setHttpClientConfigCallback((httpClientBuilder) -> {
                     httpClientBuilder.disableAuthCaching();
-                    // 配置ssl：httpClientBuilder.setSSLContext();
+                    // ssl context： httpClientBuilder.setSSLContext();
+//                    return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider).setDefaultIOReactorConfig(
+//                            IOReactorConfig.custom().setIoThreadCount(1).build();
                     return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
                 })
         );

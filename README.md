@@ -1,10 +1,12 @@
 # nessaj-web-sdk
 
-## 1.httpclient-sdk  
+## 1.httpclient-sdk
+
 使用方法：  
-创建一个**sender** 
+创建一个**sender**
 通过**HttpRequestBuilder**配置好请求参数  
 调用sender的send方法发送请求,并获取响应
+
 ```java
 public class HttpGetHasParamsDemo {
 
@@ -32,10 +34,10 @@ public class HttpGetHasParamsDemo {
 ```
 
 2022-02-27:
-新增带ssl证书请求功能
+新增带ssl证书请求功能(http with ssl)
 
 2022-03-09:
-新增httpmime上传文件功能
+新增httpmime上传文件功能(upload multipartFile)
 
 ```java
 public class UploadDemoWithSSL {
@@ -63,14 +65,11 @@ public class UploadDemoWithSSL {
 }
 ```
 
+待施工...
 
+## 2.redis-sdk
 
-待施工...  
-
-
-## 2.redis-sdk  
 jedis templatet
-
 
 ## 3.kafka
 
@@ -80,5 +79,44 @@ sdk for the nessaj-web-projects
 
 elasticsearch java high level rest client...
 
+### 4.1 How to get a rest-client?
+
+Set your system environment variables:
+```shell
+HOSTS=192.168.2.6\;192.168.2.7;
+PORTS=9200\;9200;
+SCHEME=http;
+USERNAME=elastic
+PASSWORD=Huawei@123;
+```
+
+Get a rest-client from **RestHighLevelClientFactory**
+```java
+RestHighLevelClient client=RestHighLevelClientFactory.getInstance().build();
+```
+
+### 4.2 How to create a index from a entity class.
+
+this is a example for you to learn how to create a elasticsearch-index-entity:
+
+```java
+
+@Index(name = "cat")
+public class Cat {
+
+    @Type
+    private String name;
+
+    @Type(type = ElasticType.LONG)
+    private String age;
+
+    @Type
+    private String gender;
+
+    @Type(type = ElasticType.DATE)
+    private Date birthday;
+
+}
+```
 
 

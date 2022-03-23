@@ -77,11 +77,14 @@ sdk for the nessaj-web-projects
 
 ## 4.elasticsearch
 
+如何创建rest-client?  
+如何从一个实体类创建index?  
 elasticsearch java high level rest client...
 
 ### 4.1 How to get a rest-client?
 
 Set your system environment variables:
+
 ```shell
 HOSTS=192.168.2.6\;192.168.2.7;
 PORTS=9200\;9200;
@@ -91,6 +94,7 @@ PASSWORD=Huawei@123;
 ```
 
 Get a rest-client from **RestHighLevelClientFactory**
+
 ```java
 RestHighLevelClient client=RestHighLevelClientFactory.getInstance().build();
 ```

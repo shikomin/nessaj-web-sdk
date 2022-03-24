@@ -9,6 +9,6 @@ public interface IndexMapping<T> {
     String MAPPINGS_PATH = "/mappings/";
     String MAPPINGS_SUFFIX = ".json";
 
-    T getMapping(String indexName);
+    T getMapping(Class<?> clazz);
 
 }

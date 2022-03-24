@@ -1,5 +1,9 @@
 package com.nessaj.web.sdk.elasticsearch.operator;
 
+import com.nessaj.web.sdk.elasticsearch.annotation.Index;
+import com.nessaj.web.sdk.elasticsearch.annotation.Type;
+import com.nessaj.web.sdk.elasticsearch.entities.Cat;
+import com.nessaj.web.sdk.elasticsearch.exception.IndexAnnotationNotFound;
 import com.nessaj.web.sdk.elasticsearch.factory.RestHighLevelClientFactory;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -10,6 +14,8 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.Map;
 
 
 /**
@@ -28,13 +34,32 @@ public class IndexOperator {
         this.client = client;
     }
 
-    public void createIndex(String indexName, String jsonStr) {
+    public static void createIndex(Class<?> clazz) throws IndexAnnotationNotFound {
+        if (!clazz.isAnnotationPresent(Index.class)) {
+            throw new IndexAnnotationNotFound(clazz);
+        }
+        Index indexAnnotation = clazz.getAnnotation(Index.class);
+        Object mapping = null;
+        Settings setting = null;
+        try {
+            mapping = indexAnnotation.mappingGenerator().newInstance().getMapping(clazz);
+            setting = indexAnnotation.settingGenerator().newInstance().getSetting();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        System.out.println((String) mapping);
+//        if (mapping instanceof String) {
+//            createIndex(indexAnnotation.name(), (String) mapping);
+//        }
+
+    }
+
+    public void createIndex(String indexName, String mapping, Settings setting) {
         CreateIndexRequest request = new CreateIndexRequest(indexName);
-        request.settings(Settings.builder()
-                .put("index.number_of_shards", 1)
-                .put("index.number_of_replicas", 1)
-        );
-        request.mapping(jsonStr, XContentType.JSON);
+        request.settings(setting);
+        request.mapping(mapping, XContentType.JSON);
         request.setTimeout(TimeValue.timeValueMinutes(1));
         request.setMasterTimeout(TimeValue.timeValueMinutes(1));
         CreateIndexResponse response = null;
@@ -45,6 +70,14 @@ public class IndexOperator {
         }
         System.out.println("isAcknowledged: " + response.isAcknowledged());
         System.out.println("isShardsAcknowledged: " + response.isShardsAcknowledged());
+    }
+
+    public static void main(String[] args) {
+        try {
+            IndexOperator.createIndex(Cat.class);
+        } catch (IndexAnnotationNotFound indexAnnotationNotFound) {
+            indexAnnotationNotFound.printStackTrace();
+        }
     }
 
 }

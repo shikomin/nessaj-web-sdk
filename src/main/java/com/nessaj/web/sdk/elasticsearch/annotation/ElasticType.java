@@ -6,6 +6,16 @@ package com.nessaj.web.sdk.elasticsearch.annotation;
  */
 public enum ElasticType {
 
-    TEXT, LONG, DATE;
+    TEXT("text"), LONG("long"), DATE("date");
+
+    private String name;
+
+    ElasticType(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

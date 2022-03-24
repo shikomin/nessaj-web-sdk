@@ -1,0 +1,53 @@
+{
+  "student-01": {
+    "aliases": {},
+    "mappings": {
+      "properties": {
+        "age": {
+          "type": "long"
+        },
+        "message": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "name": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "postDate": {
+          "type": "date"
+        }
+      }
+    },
+    "settings": {
+      "index": {
+        "routing": {
+          "allocation": {
+            "include": {
+              "_tier_preference": "data_content"
+            }
+          }
+        },
+        "number_of_shards": "1",
+        "provided_name": "student-01",
+        "creation_date": "1648031109908",
+        "number_of_replicas": "1",
+        "uuid": "lGBQfEsTR4qGu7mRYUpO1g",
+        "version": {
+          "created": "7130399"
+        }
+      }
+    }
+  }
+}
+

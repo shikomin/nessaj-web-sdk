@@ -4,7 +4,7 @@ package com.nessaj.web.sdk.elasticsearch.constants;
  * @author keming
  * @Date 2022/03/22 16:46
  */
-public class PropertiesConstant {
+public class Constants {
 
     public static final String HOSTS = "HOSTS";
 

@@ -1,5 +1,8 @@
 package com.nessaj.web.sdk.elasticsearch;
 
+import com.nessaj.web.sdk.elasticsearch.entities.Cat;
+import com.nessaj.web.sdk.elasticsearch.entities.Dog;
+import com.nessaj.web.sdk.elasticsearch.exception.IndexAnnotationNotFound;
 import com.nessaj.web.sdk.elasticsearch.operator.IndexOperator;
 
 /**
@@ -36,9 +39,12 @@ public class IndexTest {
                 "    }\n" +
                 "  }\n" +
                 "}";
-        operator.createIndex("students", mapping1);
-
-        operator.createIndex("index002", mapping2);
+        try {
+//            operator.createIndex(Cat.class);
+            operator.createIndex(Dog.class);
+        } catch (IndexAnnotationNotFound e) {
+            e.printStackTrace();
+        }
 
     }
 

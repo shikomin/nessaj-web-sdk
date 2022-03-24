@@ -17,27 +17,25 @@ public class DefaultMapping implements IndexMapping<String> {
 
     @Override
     public String getMapping(Class clazz) {
-        StringBuilder mapping = new StringBuilder(Constants.DOUBLE_QUOTATION_MARK + "mapping" + Constants.DOUBLE_QUOTATION_MARK);
-        mapping.append(": {" + Constants.LINE_BREAK
-                + DOUBLE_SPACE + Constants.DOUBLE_QUOTATION_MARK
+        StringBuilder mapping = new StringBuilder();
+        mapping.append("{"
+                + Constants.DOUBLE_QUOTATION_MARK
                 + "properties" + Constants.DOUBLE_QUOTATION_MARK
-                + ": {" + Constants.LINE_BREAK);
+                + ":{");
         Field[] fields = clazz.getDeclaredFields();
         // set index properties
         for (int i = 0; i < fields.length; i++) {
             if (fields[i].isAnnotationPresent(Type.class)) {
                 Type type = fields[i].getAnnotation(Type.class);
-                mapping.append(DOUBLE_SPACE + DOUBLE_SPACE
-                        + Constants.DOUBLE_QUOTATION_MARK + fields[i].getName() + Constants.DOUBLE_QUOTATION_MARK
-                        + ": {" + Constants.LINE_BREAK
-                        + DOUBLE_SPACE + DOUBLE_SPACE + DOUBLE_SPACE
+                mapping.append(Constants.DOUBLE_QUOTATION_MARK + fields[i].getName() + Constants.DOUBLE_QUOTATION_MARK
+                        + ": {"
                         + Constants.DOUBLE_QUOTATION_MARK + "type" + Constants.DOUBLE_QUOTATION_MARK + ": "
-                        + Constants.DOUBLE_QUOTATION_MARK + type.type().getName() + Constants.DOUBLE_QUOTATION_MARK + Constants.LINE_BREAK
-                        + DOUBLE_SPACE + DOUBLE_SPACE + "}" + "," + Constants.LINE_BREAK);
+                        + Constants.DOUBLE_QUOTATION_MARK + type.type().getName() + Constants.DOUBLE_QUOTATION_MARK
+                        + "}" + ",");
             }
         }
         mapping.deleteCharAt(mapping.lastIndexOf(","));
-        mapping.append(DOUBLE_SPACE + "}" + Constants.LINE_BREAK + "}");
+        mapping.append("}" + "}");
 
         return mapping.toString();
     }

@@ -1,7 +1,6 @@
 package com.nessaj.web.sdk.elasticsearch.operator;
 
 import com.nessaj.web.sdk.elasticsearch.annotation.Index;
-import com.nessaj.web.sdk.elasticsearch.annotation.Type;
 import com.nessaj.web.sdk.elasticsearch.entities.Cat;
 import com.nessaj.web.sdk.elasticsearch.exception.IndexAnnotationNotFound;
 import com.nessaj.web.sdk.elasticsearch.factory.RestHighLevelClientFactory;
@@ -14,8 +13,6 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.Map;
 
 
 /**
@@ -34,7 +31,7 @@ public class IndexOperator {
         this.client = client;
     }
 
-    public static void createIndex(Class<?> clazz) throws IndexAnnotationNotFound {
+    public void createIndex(Class<?> clazz) throws IndexAnnotationNotFound {
         if (!clazz.isAnnotationPresent(Index.class)) {
             throw new IndexAnnotationNotFound(clazz);
         }
@@ -50,9 +47,9 @@ public class IndexOperator {
             e.printStackTrace();
         }
         System.out.println((String) mapping);
-//        if (mapping instanceof String) {
-//            createIndex(indexAnnotation.name(), (String) mapping);
-//        }
+        if (mapping instanceof String) {
+            createIndex(indexAnnotation.name(), (String) mapping, setting);
+        }
 
     }
 
@@ -71,13 +68,5 @@ public class IndexOperator {
         System.out.println("isAcknowledged: " + response.isAcknowledged());
         System.out.println("isShardsAcknowledged: " + response.isShardsAcknowledged());
     }
-
-    public static void main(String[] args) {
-        try {
-            IndexOperator.createIndex(Cat.class);
-        } catch (IndexAnnotationNotFound indexAnnotationNotFound) {
-            indexAnnotationNotFound.printStackTrace();
-        }
-    }
-
+    
 }

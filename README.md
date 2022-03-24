@@ -1,11 +1,12 @@
 # nessaj-web-sdk
 
 ## 1.httpclient-sdk
-
-使用方法：  
-创建一个**sender**
+ 
+创建一个**sender**  
 通过**HttpRequestBuilder**配置好请求参数  
 调用sender的send方法发送请求,并获取响应
+
+How to send a http request?  
 
 ```java
 public class HttpGetHasParamsDemo {

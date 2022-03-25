@@ -4,6 +4,7 @@ import com.nessaj.web.sdk.elasticsearch.entities.Cat;
 import com.nessaj.web.sdk.elasticsearch.entities.Dog;
 import com.nessaj.web.sdk.elasticsearch.exception.IndexAnnotationNotFound;
 import com.nessaj.web.sdk.elasticsearch.operator.IndexOperator;
+import org.elasticsearch.client.indices.CreateIndexResponse;
 
 /**
  * @author keming
@@ -13,35 +14,14 @@ public class IndexTest {
 
     public static void main(String[] args) {
         IndexOperator operator = new IndexOperator();
-        String mapping1 = "{\n" +
-                "  \"properties\": {\n" +
-                "    \"name\": {\n" +
-                "      \"type\": \"text\"\n" +
-                "    },\n" +
-                "    \"age\": {\n" +
-                "      \"type\": \"long\"\n" +
-                "    },\n" +
-                "    \"sid\": {\n" +
-                "      \"type\": \"long\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
-        String mapping2 = "{\n" +
-                "  \"properties\": {\n" +
-                "    \"name\": {\n" +
-                "      \"type\": \"text\"\n" +
-                "    },\n" +
-                "    \"age\": {\n" +
-                "      \"type\": \"long\"\n" +
-                "    },\n" +
-                "    \"tid\": {\n" +
-                "      \"type\": \"long\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
         try {
-//            operator.createIndex(Cat.class);
-            operator.createIndex(Dog.class);
+//            operator.createIndex(Dog.class);
+            System.out.println("index cat exists:" + operator.isExist("cat"));
+            System.out.println("delete index cat:" + operator.deleteIndex("cat").isAcknowledged());
+            CreateIndexResponse response = operator.createIndex(Cat.class);
+            System.out.println("isAcknowledged: " + response.isAcknowledged());
+            System.out.println("isShardsAcknowledged: " + response.isShardsAcknowledged());
+            operator.closeClient();
         } catch (IndexAnnotationNotFound e) {
             e.printStackTrace();
         }

@@ -39,8 +39,8 @@ public class RestHighLevelClientFactory {
                 getRestClientBuilder().setHttpClientConfigCallback((httpClientBuilder) -> {
                     httpClientBuilder.disableAuthCaching();
                     // ssl context： httpClientBuilder.setSSLContext();
-//                    return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider).setDefaultIOReactorConfig(
-//                            IOReactorConfig.custom().setIoThreadCount(1).build();
+                    // return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider).setDefaultIOReactorConfig(
+                    // IOReactorConfig.custom().setIoThreadCount(1).build();
                     return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
                 })
         );

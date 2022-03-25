@@ -28,8 +28,7 @@ public class DefaultMapping implements IndexMapping<String> {
             if (fields[i].isAnnotationPresent(Type.class)) {
                 Type type = fields[i].getAnnotation(Type.class);
                 mapping.append(Constants.DOUBLE_QUOTATION_MARK + fields[i].getName() + Constants.DOUBLE_QUOTATION_MARK
-                        + ": {"
-                        + Constants.DOUBLE_QUOTATION_MARK + "type" + Constants.DOUBLE_QUOTATION_MARK + ": "
+                        + ": {" + Constants.DOUBLE_QUOTATION_MARK + "type" + Constants.DOUBLE_QUOTATION_MARK + ": "
                         + Constants.DOUBLE_QUOTATION_MARK + type.type().getName() + Constants.DOUBLE_QUOTATION_MARK
                         + "}" + ",");
             }

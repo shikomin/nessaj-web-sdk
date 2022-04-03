@@ -1,6 +1,6 @@
 package com.nessaj.web.sdk.elasticsearch.factory;
 
-import com.nessaj.web.sdk.elasticsearch.constants.Constants;
+import com.nessaj.web.sdk.common.constants.Constants;
 
 import java.util.Arrays;
 

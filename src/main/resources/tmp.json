@@ -51,3 +51,43 @@
   }
 }
 
+{
+  "cat": {
+    "aliases": {},
+    "mappings": {
+      "properties": {
+        "age": {
+          "type": "long"
+        },
+        "birthday": {
+          "type": "date"
+        },
+        "gender": {
+          "type": "text"
+        },
+        "name": {
+          "type": "text"
+        }
+      }
+    },
+    "settings": {
+      "index": {
+        "routing": {
+          "allocation": {
+            "include": {
+              "_tier_preference": "data_content"
+            }
+          }
+        },
+        "number_of_shards": "1",
+        "provided_name": "cat",
+        "creation_date": "1648186361238",
+        "number_of_replicas": "1",
+        "uuid": "05WiVAhtTQG62MHdV6kvKA",
+        "version": {
+          "created": "7130399"
+        }
+      }
+    }
+  }
+}

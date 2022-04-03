@@ -1,11 +1,9 @@
 package com.nessaj.web.sdk.elasticsearch.interfaces;
 
 import com.nessaj.web.sdk.elasticsearch.annotation.Type;
-import com.nessaj.web.sdk.elasticsearch.constants.Constants;
-import jdk.nashorn.internal.runtime.ConsString;
+import com.nessaj.web.sdk.common.constants.Constants;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 /**
  * @author keming

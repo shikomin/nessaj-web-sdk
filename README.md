@@ -100,9 +100,9 @@ Get a rest-client from **RestHighLevelClientFactory**
 RestHighLevelClient client=RestHighLevelClientFactory.getInstance().build();
 ```
 
-### 4.2 How to create a index from a entity class.
+### 4.2 How to create an index from an entity class.
 
-this is a example for you to learn how to create a elasticsearch-index-entity:
+this is an example for you to learn how to create an elasticsearch-index-entity:
 
 ```java
 

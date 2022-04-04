@@ -22,7 +22,7 @@ public class ZipArchiveUtil {
     private static Logger logger = Logger.getLogger(ZipArchiveUtil.class);
     private static final int BUFFER_SIZE = 1024;
 
-    public static void unZip(String path, String dest) throws UnzipFileException {
+    public static boolean unZip(String path, String dest) throws UnzipFileException {
         if (!path.endsWith(".zip")) {
             throw new UnzipFileException("fail to unzip, it is not a zip-file, pls check the file format");
         }
@@ -54,7 +54,7 @@ public class ZipArchiveUtil {
                 e.printStackTrace();
             }
         }
-
+        return true;
     }
 
     private static void createFile(InputStream inputStream, File dest) {

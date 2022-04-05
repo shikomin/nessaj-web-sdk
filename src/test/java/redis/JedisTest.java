@@ -1,6 +1,6 @@
 package redis;
 
-import com.nessaj.web.sdk.redis.factory.JedisConnectionFactory;
+import com.nessaj.sdk.redis.factory.JedisConnectionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

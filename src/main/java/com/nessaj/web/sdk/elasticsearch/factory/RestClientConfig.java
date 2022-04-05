@@ -1,6 +1,6 @@
 package com.nessaj.web.sdk.elasticsearch.factory;
 
-import com.nessaj.web.sdk.common.constants.Constants;
+import com.nessaj.web.sdk.common.constants.SymbolSet;
 
 import java.util.Arrays;
 
@@ -21,12 +21,12 @@ public class RestClientConfig {
     private static String password;
 
     static {
-        RestClientConfig.hosts = System.getenv(Constants.HOSTS).split(";");
-        RestClientConfig.ports = Arrays.stream(System.getenv(Constants.PORTS).split(";"))
+        RestClientConfig.hosts = System.getenv(SymbolSet.HOSTS).split(";");
+        RestClientConfig.ports = Arrays.stream(System.getenv(SymbolSet.PORTS).split(";"))
                 .mapToInt(Integer::parseInt).toArray();
-        RestClientConfig.scheme = System.getenv(Constants.SCHEME);
-        RestClientConfig.userName = System.getenv(Constants.USERNAME);
-        RestClientConfig.password = System.getenv(Constants.PASSWORD);
+        RestClientConfig.scheme = System.getenv(SymbolSet.SCHEME);
+        RestClientConfig.userName = System.getenv(SymbolSet.USERNAME);
+        RestClientConfig.password = System.getenv(SymbolSet.PASSWORD);
     }
 
     public static String[] getHosts() {

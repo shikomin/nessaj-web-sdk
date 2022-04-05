@@ -49,8 +49,9 @@ public class JsonUtil {
     }
 
     public static void main(String[] args) {
-        String jsonStr = JsonUtil.readJsonFile("E:/Nessaj/local-workspace/portal/packages/manifest.json");
+        String jsonStr = JsonUtil.readJsonFile("E:/Nessaj/local-workspace/portal/packages/module.json");
         System.out.println(jsonStr);
+        System.out.println(str2json(str2json(jsonStr).getString("module")).getString("mname"));
     }
 
 }
